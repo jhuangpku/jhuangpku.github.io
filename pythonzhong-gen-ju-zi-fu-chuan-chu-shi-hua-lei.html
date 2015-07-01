@@ -111,11 +111,11 @@
         <div id="blog_main_area" class="left col-md-9" count=16>
   <!-- article title -->
   <header>
-      <h1>dataframe常见操作</h1>
+      <h1>Python中根据字符串初始化类</h1>
     <small class="fsize13">
-            <a href="/category/r.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> R</a>
+            <a href="/category/python.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> Python</a>
       <!--
-      <a href="/dataframechang-jian-cao-zuo.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dataframechang-jian-cao-zuo.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       -->
          </small>
   
@@ -135,24 +135,124 @@
 </header>
 
   <article class='content'>
-    <p>在使用R做数据挖掘时，最常用的数据结构莫过于dataframe了，下面列出几种常见的dataframe的操作方法。
-1.查看数据</p>
-<p>head(dataframe) # 查看数据前10行
-tail(dataframe) # 查看数据后10行</p>
+    <p>在算法类code中，一个非常常见的模式是读取配置，根据配置的字符串决定应该使用哪个类，即需要解决根据类名生成实例。在这个过程中，希望能够支持使用者添加自己的类，而不需要动框架代码，典型的工厂模式。</p>
+<p>在具体到python的实现时，需要能够根据string来决定生成哪个实例，查了几种方法：</p>
+<p>方法一：通过getattr(module_name, class_name)来生成实例，</p>
+<p>方法二：通过eval(class_name)来生成实例，问题主要在于eval不安全</p>
+<p>最后采用了方法一，代码如下：</p>
+<p>factory.py</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pizza</span>
+
+<span class="k">class</span> <span class="nc">PizzaFactory</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pizza factory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">create_pizza</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        根据name，生成对应的pizza</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+        <span class="n">pizza_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pizza_class</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">PizzaStore</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    pizza store</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_factory</span> <span class="o">=</span> <span class="n">PizzaFactory</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">order_pizza</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">pizza</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_factory</span><span class="o">.</span><span class="n">create_pizza</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">pizza</span>
+        <span class="n">pizza</span><span class="o">.</span><span class="n">make</span><span class="p">()</span>
+        <span class="n">pizza</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">read_conf</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Can not find file [</span><span class="si">%s</span><span class="s">]</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">names</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    main function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pizza_store</span> <span class="o">=</span> <span class="n">PizzaStore</span><span class="p">()</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="n">read_conf</span><span class="p">(</span><span class="s">&quot;pizza_conf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">pizza_store</span><span class="o">.</span><span class="n">order_pizza</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>pizza.py</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">Pizza</span>():
+    <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    pizza </span>
+<span class="s">    &quot;&quot;&quot;</span>
+
+    <span class="n">def</span> <span class="k">make</span>(<span class="k">self</span>):
+        <span class="nb">print</span> <span class="s">&quot;I am making&quot;</span>
+
+    <span class="n">def</span> <span class="n">box</span>(<span class="k">self</span>):
+        <span class="nb">print</span> <span class="s">&quot;I am boxing&quot;</span>
+</pre></div>
+
+
+<p>king_pizza.py</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pizza</span> 
+
+<span class="k">class</span> <span class="nc">KingPizza</span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">Pizza</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s">&quot;My name is KingPizza&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+</pre></div>
+
+
+<p>queen_pizza.py</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pizza</span>
+
+<span class="k">class</span> <span class="nc">QueenPizza</span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">Pizza</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="s">&quot;My name is QueenPizza&quot;</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+</pre></div>
+
+
+<p>pizza_conf</p>
+<div class="highlight"><pre>king_pizza  KingPizza
+queen_pizza QueenPizza
+</pre></div>
   </article>
 <!-- 多说评论框 start -->
-      <div class="ds-thread" data-thread-key="dataframechang-jian-cao-zuo.html" data-title="dataframe常见操作" data-url="jhuangpku.github.io/dataframechang-jian-cao-zuo.html"></div> 
+      <div class="ds-thread" data-thread-key="pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" data-title="Python中根据字符串初始化类" data-url="jhuangpku.github.io/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html"></div> 
       <!-- 多说评论框 end -->
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/dataframechang-jian-cao-zuo.html&title=dataframe常见操作&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html&title=Python中根据字符串初始化类&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->

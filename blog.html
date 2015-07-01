@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<title>huangjing - </title>
+<title>huangjing</title>
 <meta name="description" content="" />
 <meta name="Author" content="Huang Jing" />
 
@@ -45,6 +45,20 @@
 <script type="text/javascript" src="/theme/js/modernizr.min.js"></script>
 
 <!-- google authorship -->
+
+ <!--百度统计代码 start-->
+     <script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?5ae1359f547062e59db32fcfab10acab";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+         })();
+     </script>
+    <!--百度统计代码 end-->
+
+
 </head>
 
 <body>
@@ -94,10 +108,385 @@
     <article class="container">
 
       <div class="row">
-        <div id="blog_main_area" class="left col-md-9" count=2>
+        <div id="blog_main_area" class="left col-md-9" count=16>
   <!-- blog item -->
 
       <div class="item">
+        <div class="item-title">
+            <h2><a href="/bi-ye.html">毕业</a></h2>
+          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
+          <!--
+          <a href="/bi-ye.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a> -->
+          <span class="label label-default light">Wed 01 July 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>应该恭喜自己终于有勇气逃离舒适区，愿意尝试一些新事物了，尽管回过头来，可能会后悔这个决定，但是相信不会后悔这个决定所带来的经历的，因为no pain no gain，会经历很多的痛苦，但是它们带给你成长。</p>
+<p>算上实习，在百度已经呆了有7年多了，在这7年里，我曾经无数次的有过离职的念头，它们也随着我的经历而不断发生变化，从最早对架构业务频繁调整的不满，到申请职称的各种痛苦各种潜规则的怨念，再到整个庞大的组织埋没和磨灭了个人的激情。但是现在，它性质已经发生变化，不再是小家子气的碎碎念和不满了。理由很简单，就是我想尝试更多的事情，我希望能有更丰富的人生经历，更宽广的视野，我想不断的警醒自己，离开了百度这个平台，你还有什么能力？你还需要什么能力？因为这个转变，我做了最后的决定，因为我想我真的是想清楚了这个问题（也许几年后回头来看，发现只是我认为自己想清楚了:(，但是相信没有这个改变我永远不知道自己是否想清楚了）</p>
+<p>七年，一路兜兜转转，走了不知道多少弯路，和同期同背景进百度的来比，自己可谓混的惨淡，甚至是惨不忍睹。但是也是这七年的磕磕碰碰，促使自己去思考去反省人性的缺点，我想如果一路走的很顺利，是不知道自己有这么多问题的吧，也许这曲折的经历带来的反省反而是个宝贵的财富，毕竟人不可能永远顺利，总有一天会遇到挫折而去思考这个问题，越晚遇到挫折 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/bi-ye.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item">
+        <div class="item-title">
+            <h2><a href="/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html">Transfer learning在广告点击率预估中的应用</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <!--
+          <a href="/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a> -->
+          <span class="label label-default light">Wed 01 July 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>知心商业广告也是按照点击收费的广告，为了收益最大化，点击率预估准确与否就很重要了，大家应该都知道商业广告点击率预估有一套很有效的机器学习的方法。但是，与传统的凤巢/网盟广告不大一样，知心广告存在多种展现形式，并且不断有新的展现形式加入，这就会频繁的出现“冷”启动，数据少的问题，但是这个冷启动并不是完全的冷启动，因为虽然有多种展现形式，我们的广告库是同一套。我们希望充分利用这个特性，把别的场景上的模型的知识迁移到数据量较少的场景上。</p>
+<p>我们先简单回顾下一个典型的广告点击率模型的几个要素：
+首先是样本：一个广告的一次展现构成一个样本
+然后是特征：这里一般包括ID类的非泛化特征+泛化特征
+最后是模型：凤巢是经历了LR到GBDT再到DNN的过程，本文主要建立在LR的基础上做的实验</p>
+<p>好的，回到我们的问题，我们的问题是有好多个点击率预估模型（一个场景对应一个模型），我们怎么利用广告库是同一套的特性，用样本充分的场景的数据/参数解决样本不充分的场景的点击率预估问题，这就是学术界研究的transfer learning。</p>
+<p>首先学术界的问题定义：有两个数据集，一个是大一些的数据集，我们管他叫source，还有一个是小一些的数据集，我们管他叫target，我们的目的是希望通过某种相似性，把source上的知识迁移到target上，能让target数据集上的模型更好。什么叫知识迁移呢，有两种基本思路，一个是借数据，借数据的思想是说source上有一些数据可以适当转换一下拿过来和target上的数据一起训练；一个是借参数 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item">
+        <div class="item-title">
+            <h2><a href="/gan-xie.html">感谢</a></h2>
+          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
+          <!--
+          <a href="/gan-xie.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a> -->
+          <span class="label label-default light">Thu 04 June 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>感谢遇到的你们</p>
+<p>或者让我勇敢</p>
+<p>或者让我失败</p>
+<p>或者让我哭泣</p>
+<p>或者让我忧伤</p>
+<p>或者让我开心</p>
+<p>或者让我坚持</p>
+<p>直到成为今天的自己</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/gan-xie.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+ 
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html">特征分析在广告点击率预估上为什么没那么重要</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Mon 13 April 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>首先需要澄清一点，这里的特征分析主要是指的传统上数据挖掘里面讲的一些特征关系研究比如共线性问题。
+另外，这里的经验特指用LR来做点击率预估。大家学完数据挖掘/机器学习的课程的时候，一定会有个体会，
+特征不可以乱加，乱加特征很可能会导致更坏的效果。所以，在没有任何人的指导下，仅仅是凭借着前人的一些资料，
+我根据之前看的书本，习惯性的陷入了特征选择这个坑中，我会想效果不好的原因会不会是因为加入了特征，有共线性导致的？
+为此，我还专门分析了下LR回归出来的系数的结果，发现有些系数的大小关系确实是不那么与业务直观相符合。
+于是我还尝试减去了这个特征，或者对这个特征做了特殊处理，结果自然是auc下降。在之后的过程中，
+咨询了一些前人，才知道自己的方向走偏，事实上，无数人的经验表明在广告点击率预估这个问题上，
+如果不是性能问题，从来不需要减特征，加入新的特征最多出现auc保持不变，基本不会出现auc下降的情况。
+这直接导致在做广告点击率预估的组里，特征挖掘从来都是没有技术含量的苦力活。
+之后，也没太思考为什么，或者我当时认为大数据下的数据挖掘也许就是这么做的，直到最近做了一个query纠错的问题。</p>
+<p>先描述下query纠错的背景：大致就是网民在用语音搜索的时候，语音组返回10条可能的query，
+我们需要根据这10个query的特征，选择出一个最好的query返回。
+刚开始接手的时候，我尝试了几个特征，发现加某些特征竟然会带来效果的严重下降！！！原来特征选择还是重要的。</p>
+<p>那么回到最初的问题，为什么在广告点击率这个问题上，没有这种问题呢？</p>
+<p>我觉得核心区别在于LR的广告点击率预估实际上是个不那么怕过拟合的机器学习系统 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html">AUC上升CTR一定上升么</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Fri 27 February 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>记得几年前，百度从谷歌挖来了一个非常牛逼的工程师，这位工程师带来了很多机器学习的概念，实在是让自己这种土包子开了眼界，在一次会议上，这位工程师在解释auc和线上ctr的关系时，说 ”我做了这么多年机器学习，还从来没见过算法A在auc上胜过算法B，但是线上表现A比B差。” 必须备注一点，自己当时连auc都没搞清楚的小喽啰，也许记忆会有偏差，所以原话也许有偏差。</p>
+<p>事实上，在点击率预估这项工程的开展初期，这句话非常正确，因为有对它的坚定信念，帮助我们fix了类似于线上线下环境不一致等无数工程bug。因此，看到这篇文章的同学们，如果你发现auc上升，点击率却不上升，请优先排查bug。在确定没有bug的情况下，再看下文吧。</p>
+<p>在bug逐渐收敛之后，这段时间是令人欣慰的，无数次的找新的特征，加入模型，auc上升，线上ctr提升。可是逐渐的，我们出现了越来越多的AUC上升，但是CTR并不一定提升，甚至是有下降的情况，总结分析有下面几种情况：</p>
+<ol>
+<li>
+<p>环境特征的引入</p>
+<p>这里的环境特征是指的网民特征，如query，cookie，流量等与广告无关的信息。如果环境特征引入起的作用只是把不会被点击的环境和可能被点击的环境区分开，例如加入了cookie特征，从而把样本拆的更细，而这个特征的加入的表现对评估数据集auc的提升只是表现在命中某些cookie，点击率为0，那么线上多半不会有太显著的变化，因为针对这些cookie，不管出什么广告 ...</p></li></ol>
+        </p>
+
+        <!-- read more button -->
+        <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/ceng-guo-fan-de-zheng-mian-yu-ce-mian.html">曾国藩的正面与侧面</a></h2>
+          <a href="category/du-shu.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 读书</a> 
+          <a href="/ceng-guo-fan-de-zheng-mian-yu-ce-mian.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Fri 27 February 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>感谢毕老师荐书。</p>
+<ul>
+<li>
+<blockquote>
+<p>行事过于方刚者，表面上似乎是强者，实际上却是弱者。这片土地上真正的强者，是表面上看起来柔弱退让之人。所谓天下之至柔,驰骋天下之至坚,“江河所以为百谷之王者,以其善下。所谓“大柔非柔，至刚无刚。中国社会的潜规则是不可能一下子被扫荡的。那些他以前所看不起的虚伪、麻木、圆滑、机诈，是在这片土地上生存的必须手段。只有必要时合光同尘，圆滑柔软，才能顺利通过一个个困难的隘口。只有海纳百川，藏污纳垢，才能调动各方面的力量，达到胜利的彼岸。</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p>曾国藩早年是一个典型的愤青。单线思维、
+唯我独革、愤世嫉俗、矫激傲岸。做起事来手段
+单一、风格强硬、纯刚至猛、一往无前。因此处
+处碰壁，动辄得咎。中年以后，曾国藩终于在与
+世界的战斗中变得圆融了。然而这种圆融不是他
+本性中所有，是靠不屈不挠的精神从一次又一次
+跌倒中悟出来的，是从质朴方刚中升发来的。这
+是曾国藩和别人的不同之处，所以他的圆融是质 ...</p></blockquote></li></ul>
+        </p>
+
+        <!-- read more button -->
+        <a href="/ceng-guo-fan-de-zheng-mian-yu-ce-mian.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html">Python中根据字符串初始化类</a></h2>
+          <a href="category/python.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Python</a> 
+          <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Fri 27 February 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>在算法类code中，一个非常常见的模式是读取配置，根据配置的字符串决定应该使用哪个类，即需要解决根据类名生成实例。在这个过程中，希望能够支持使用者添加自己的类，而不需要动框架代码，典型的工厂模式。</p>
+<p>在具体到python的实现时，需要能够根据string来决定生成哪个实例，查了几种方法：</p>
+<p>方法一：通过getattr(module_name, class_name)来生成实例，</p>
+<p>方法二：通过eval(class_name)来生成实例，问题主要在于eval不安全</p>
+<p>最后采用了方法一，代码如下：</p>
+<p>factory.py</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pizza</span>
+
+<span class="k">class</span> <span class="nc">PizzaFactory</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pizza factory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">create_pizza</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        根据name，生成对应的pizza</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+        <span class="n">pizza_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name ...</span></pre></div>
+        </p>
+
+        <!-- read more button -->
+        <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/hao-mei-yi-si.html">好没意思</a></h2>
+          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
+          <a href="/hao-mei-yi-si.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Fri 30 January 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>情怀和节操碎了一地。</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/hao-mei-yi-si.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/wo-de-2014zong-jie.html">我的2014总结</a></h2>
+          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
+          <a href="/wo-de-2014zong-jie.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Wed 28 January 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>这个总结来的有点晚，元旦前太忙，最近终于有点时间可以写些什么了，按照农历算，还不算晚，不算晚。</p>
+<p>首先是例行的流水账：</p>
+<p>2014年1月，做的一个通用项目因为老大战略的变化，突然就没用了，我和文博两个人搭伙马上就ready的通用检索框架就莫名其妙的掉进了大坑，各种心塞。</p>
+<p>2014年2月，开始调整方向，专注和一个团队合作项目，每周和这个团队的三个核心开一次站会</p>
+<p>2014年3月，终于打通了两个应用入口，这其中推动的艰辛啊。。就是各种孤立无援，真心感谢文斌老大的支持还有我team同学坚持不懈的努力</p>
+<p>2014年4月-5月，享受策略迭代的成果，踩了不少坑，学了不少知识，这其中最大的收获是认识了夏粉老师和庄馨，给了我们很多的指导和帮助。在这个过程中，我的心态发生了一个重大变化：卸下所有心防，发自内心的open mind。这是在2014年的最大收获。</p>
+<p>2014年6月，原来合作的团队一直陆续离职，三个核心都换了2波？！这件事后面还有个小插曲，一起合作的夏老师那边做离职预测，我告诉他们有个重要特征没有考虑，就是团队的离职率和团队leader的离职情况，我会告诉他们这是我这几年的心酸的体会么：铁打的营盘，流水的兵！！这个月，事情又有了一些转机，老大战略又变了，原来的通用项目又有用了。再次体会到什么叫大势，想想2012年的时候，签名档还是 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/wo-de-2014zong-jie.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/da-xue-yu-gong-zuo-fen-xiang.html">大学与工作分享</a></h2>
+          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
+          <a href="/da-xue-yu-gong-zuo-fen-xiang.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Mon 19 January 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>去年4月在北交大做了一次大学与工作的讲座，整理ppt如下（again需要翻墙）</p>
+<iframe src="//www.slideshare.net/slideshow/embed_code/43653058" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+        </p>
+
+        <!-- read more button -->
+        <a href="/da-xue-yu-gong-zuo-fen-xiang.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/ee-xiang-shuo-ai-ni-bu-rong-yi.html">EE-想说爱你不容易</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <a href="/ee-xiang-shuo-ai-ni-bu-rong-yi.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Mon 19 January 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>很多人认为explore机制在冷启动中会非常有效，但是工业界很少看到explore用到广告系统的介绍和传闻。当然也许是因为场景限制，即一个广告系统只有一次冷启动，所以没有太大的工业应用价值。但是，我最近参与的广告系统正好会遇到非常多的冷启动问题，即我们的广告系统会不断的有新的广告类型和形式出现，因此有很多冷启动场景，按照道理explore在初期会有比较好的效果，但是在我们最近对广告系统的实验中，发现想象很美好，现实很骨感。同时，我们也很惊讶的发现，LR比你想象的更强大，更稳健，果然是simple but not simpler。</p>
+<p>根据我们的实验结果，总结了explore机制的几个鸡肋原因：</p>
+<p>通常情况下，我们认为ee有两个地方可能会出效果</p>
+<p>1.冷启动：系统刚开始启动的时候，LR数据不够。</p>
+<p>在我们的广告系统中，这个假设并不对。</p>
+<p>（1）广告库的主体变化不大（与新闻推荐，物料每天都变化相比），探测空间没那么大</p>
+<p>（2）即使初期数据不够，LR有一定的overfitting也没关系，因为在广告系统中，总展现一个广告没问题，并且是好的（持续带来好的pay），其实在LR中加入自解释特征其实给这些好的广告是有策略倾斜的，在广告系统，这个策略倾斜是好，对于新闻推荐是不好的，因为没有人愿意看老新闻，但是好的老新闻在LR系统中会给比较好的点击率，此时新的新闻出现的机会会少 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/ee-xiang-shuo-ai-ni-bu-rong-yi.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/qian-tan-wu-yue-shu-shu-zhi-you-hua-suan-fa.html">浅谈无约束数值优化算法</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <a href="/qian-tan-wu-yue-shu-shu-zhi-you-hua-suan-fa.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Thu 15 January 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>最近在做ctr-model相关工作时，整理了一遍机器学习中常用的无约束数值优化算法的原理和方法之间的关联，ppt分享如下</p>
+<p>需要翻墙！！</p>
+<iframe src="//www.slideshare.net/slideshow/embed_code/43539789" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+        </p>
+
+        <!-- read more button -->
+        <a href="/qian-tan-wu-yue-shu-shu-zhi-you-hua-suan-fa.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/cssxue-xi-xiao-jie.html">CSS学习小结</a></h2>
+          <a href="category/qian-duan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 前端</a> 
+          <a href="/cssxue-xi-xiao-jie.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Sat 20 December 2014</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>CSS样式写法：</p>
+<p>1.html的tag样式</p>
+<div class="highlight"><pre>div {
+}
+</pre></div>
+
+
+<p>2.class样式(点开头)</p>
+<div class="highlight"><pre>. {
+}
+</pre></div>
+
+
+<p>3.id样式(#开头)</p>
+<div class="highlight"><pre># {
+}
+</pre></div>
+
+
+<p>CSS样式的几个常用属性：</p>
+<p>1.文本编排类：font..., text..., lineheight, color</p>
+<p>2.盒子相关：margin, border, padding, width, height</p>
+<p>3.显示模式：postion, float, display, overflow</p>
+<p>float的几种取值：</p>
+<p>1.left:元素向左浮动。</p>
+<p>2.right元素向右浮动。</p>
+<p>3.none默认值。元素不浮动，并会显示在其在文本中出现的位置。</p>
+<p>4.inherit规定应该从父元素继承 float 属性的值。</p>
+<p>怎么理解float？</p>
+<p>1.设置了float属性之后，它将不再独自占据一行。可以浮动到左侧或右侧。</p>
+<p>2 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/cssxue-xi-xiao-jie.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
+        <div class="item-title">
+            <h2><a href="/qian-duan-xue-xi-xiao-jie.html">前端学习小结</a></h2>
+          <a href="category/qian-duan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 前端</a> 
+          <a href="/qian-duan-xue-xi-xiao-jie.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Fri 19 December 2014</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <ul>
+<li>20141118 概述</li>
+<li>20141124 html</li>
+<li>20141125 CSS</li>
+<li>20141127 做个简单的个人网站</li>
+<li>20141128 js</li>
+<li>20141201 js</li>
+<li>20141202 资源和框架介绍</li>
+<li>20141204 作业：<a href="https://github.com/jhuangpku/jhuangpku.github.io/issues/1">样式操作的js</a></li>
+<li>20141205 作业：<a href="https://github.com/jhuangpku/jhuangpku.github.io/issues/2">个人博客的搭建</a></li>
+<li>20141212 作业：<a href="https://github.com/jhuangpku/jhuangpku.github.io/issues/3">panel控件的实现</a></li>
+<li>20141215 作业：<a href="https://github.com/jhuangpku/jhuangpku.github.io/issues/4">表单控件的实现</a></li>
+<li>20141218 手持设备，响应式CSS</li>
+<li>20141219 作业：为efe.baidu.com增加手持式CSS</li>
+</ul>
+        </p>
+
+        <!-- read more button -->
+        <a href="/qian-duan-xue-xi-xiao-jie.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+      <div class="item" style="display: none;">
         <div class="item-title">
             <h2><a href="/du-shu-bi-ji-machine-learning-for-hackers.html">读书笔记-Machine Learning for Hackers</a></h2>
           <a href="category/du-shu.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 读书</a> 
@@ -121,7 +510,7 @@ B.对于不会遇到文本处理的人，建议跳过文本处理部分，直接
         <!-- read more button -->
         <a href="/du-shu-bi-ji-machine-learning-for-hackers.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
       </div>
-      <div class="item">
+      <div class="item" style="display: none;">
         <div class="item-title">
             <h2><a href="/dataframechang-jian-cao-zuo.html">dataframe常见操作</a></h2>
           <a href="category/r.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> R</a> 
@@ -141,7 +530,6 @@ tail(dataframe) # 查看数据后10行</p>
         <!-- read more button -->
         <a href="/dataframechang-jian-cao-zuo.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
       </div>
- 
  
   <!-- /blog item -->
 
@@ -191,7 +579,15 @@ tail(dataframe) # 查看数据后10行</p>
             <ul>
                <li><a href="/category/du-shu.html"><i class="fa fa-dot-circle-o"></i> 读书</a>
               </li>
+              <li><a href="/category/python.html"><i class="fa fa-dot-circle-o"></i> Python</a>
+              </li>
+              <li><a href="/category/qian-duan.html"><i class="fa fa-dot-circle-o"></i> 前端</a>
+              </li>
               <li><a href="/category/r.html"><i class="fa fa-dot-circle-o"></i> R</a>
+              </li>
+              <li><a href="/category/shu-ju-wa-jue.html"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a>
+              </li>
+              <li><a href="/category/za-tan.html"><i class="fa fa-dot-circle-o"></i> 杂谈</a>
               </li>
             </ul>
 
@@ -204,13 +600,92 @@ tail(dataframe) # 查看数据后10行</p>
 
             <!-- hide this part -->
             <div class="hidden">
-  None  None             </div>
+  None  None  None  None  None  None  None  None  None  None  None  None  None  None  None  None             </div>
 
             <ul class="tree">
               <li>
+                <span><i class="fa fa-minus-square-o"></i>2015</span>
+                <ul>
+                  <li>
+                    <span><i class="fa fa-plus-square-o"></i>07</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/bi-ye.html">
+                          <small>Wed 01 July 2015</small>毕业</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html">
+                          <small>Wed 01 July 2015</small>Transfer learning在广告点击率预估中的应用</a>
+                      </li>
+                    </ul>
+                    <span><i class="fa fa-plus-square-o"></i>06</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/gan-xie.html">
+                          <small>Thu 04 June 2015</small>感谢</a>
+                      </li>
+                    </ul>
+                    <span><i class="fa fa-plus-square-o"></i>04</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html">
+                          <small>Mon 13 April 2015</small>特征分析在广告点击率预估上为什么没那么重要</a>
+                      </li>
+                    </ul>
+                    <span><i class="fa fa-plus-square-o"></i>02</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html">
+                          <small>Fri 27 February 2015</small>AUC上升CTR一定上升么</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/ceng-guo-fan-de-zheng-mian-yu-ce-mian.html">
+                          <small>Fri 27 February 2015</small>曾国藩的正面与侧面</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html">
+                          <small>Fri 27 February 2015</small>Python中根据字符串初始化类</a>
+                      </li>
+                    </ul>
+                    <span><i class="fa fa-plus-square-o"></i>01</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/hao-mei-yi-si.html">
+                          <small>Fri 30 January 2015</small>好没意思</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/wo-de-2014zong-jie.html">
+                          <small>Wed 28 January 2015</small>我的2014总结</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/da-xue-yu-gong-zuo-fen-xiang.html">
+                          <small>Mon 19 January 2015</small>大学与工作分享</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/ee-xiang-shuo-ai-ni-bu-rong-yi.html">
+                          <small>Mon 19 January 2015</small>EE-想说爱你不容易</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/qian-tan-wu-yue-shu-shu-zhi-you-hua-suan-fa.html">
+                          <small>Thu 15 January 2015</small>浅谈无约束数值优化算法</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
                 <span><i class="fa fa-minus-square-o"></i>2014</span>
                 <ul>
                   <li>
+                    <span><i class="fa fa-plus-square-o"></i>12</span>
+                    <ul>
+                      <li style="display: none;">
+                        <a href="/cssxue-xi-xiao-jie.html">
+                          <small>Sat 20 December 2014</small>CSS学习小结</a>
+                      </li>
+                      <li style="display: none;">
+                        <a href="/qian-duan-xue-xi-xiao-jie.html">
+                          <small>Fri 19 December 2014</small>前端学习小结</a>
+                      </li>
+                    </ul>
                     <span><i class="fa fa-plus-square-o"></i>11</span>
                     <ul>
                       <li style="display: none;">

@@ -1,0 +1,32 @@
+  <div class="item">
+        <div class="item-title">
+            <h2><a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html">特征分析在广告点击率预估上为什么没那么重要</a></h2>
+          <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
+          <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">Mon 13 April 2015</span>
+        </div>
+        <!-- image -->
+
+        <!-- blog short preview -->
+        <p>
+            <p>首先需要澄清一点，这里的特征分析主要是指的传统上数据挖掘里面讲的一些特征关系研究比如共线性问题。
+另外，这里的经验特指用LR来做点击率预估。大家学完数据挖掘/机器学习的课程的时候，一定会有个体会，
+特征不可以乱加，乱加特征很可能会导致更坏的效果。所以，在没有任何人的指导下，仅仅是凭借着前人的一些资料，
+我根据之前看的书本，习惯性的陷入了特征选择这个坑中，我会想效果不好的原因会不会是因为加入了特征，有共线性导致的？
+为此，我还专门分析了下LR回归出来的系数的结果，发现有些系数的大小关系确实是不那么与业务直观相符合。
+于是我还尝试减去了这个特征，或者对这个特征做了特殊处理，结果自然是auc下降。在之后的过程中，
+咨询了一些前人，才知道自己的方向走偏，事实上，无数人的经验表明在广告点击率预估这个问题上，
+如果不是性能问题，从来不需要减特征，加入新的特征最多出现auc保持不变，基本不会出现auc下降的情况。
+这直接导致在做广告点击率预估的组里，特征挖掘从来都是没有技术含量的苦力活。
+之后，也没太思考为什么，或者我当时认为大数据下的数据挖掘也许就是这么做的，直到最近做了一个query纠错的问题。</p>
+<p>先描述下query纠错的背景：大致就是网民在用语音搜索的时候，语音组返回10条可能的query，
+我们需要根据这10个query的特征，选择出一个最好的query返回。
+刚开始接手的时候，我尝试了几个特征，发现加某些特征竟然会带来效果的严重下降！！！原来特征选择还是重要的。</p>
+<p>那么回到最初的问题，为什么在广告点击率这个问题上，没有这种问题呢？</p>
+<p>我觉得核心区别在于LR的广告点击率预估实际上是个不那么怕过拟合的机器学习系统 ...</p>
+        </p>
+
+        <!-- read more button -->
+        <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+      </div>
+ 

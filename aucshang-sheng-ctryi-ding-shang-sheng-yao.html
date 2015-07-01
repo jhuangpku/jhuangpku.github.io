@@ -111,11 +111,11 @@
         <div id="blog_main_area" class="left col-md-9" count=16>
   <!-- article title -->
   <header>
-      <h1>dataframe常见操作</h1>
+      <h1>AUC上升CTR一定上升么</h1>
     <small class="fsize13">
-            <a href="/category/r.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> R</a>
+            <a href="/category/shu-ju-wa-jue.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="5 articles in this category"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a>
       <!--
-      <a href="/dataframechang-jian-cao-zuo.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dataframechang-jian-cao-zuo.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="aucshang-sheng-ctryi-ding-shang-sheng-yao.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       -->
          </small>
   
@@ -135,24 +135,49 @@
 </header>
 
   <article class='content'>
-    <p>在使用R做数据挖掘时，最常用的数据结构莫过于dataframe了，下面列出几种常见的dataframe的操作方法。
-1.查看数据</p>
-<p>head(dataframe) # 查看数据前10行
-tail(dataframe) # 查看数据后10行</p>
+    <p>记得几年前，百度从谷歌挖来了一个非常牛逼的工程师，这位工程师带来了很多机器学习的概念，实在是让自己这种土包子开了眼界，在一次会议上，这位工程师在解释auc和线上ctr的关系时，说 ”我做了这么多年机器学习，还从来没见过算法A在auc上胜过算法B，但是线上表现A比B差。” 必须备注一点，自己当时连auc都没搞清楚的小喽啰，也许记忆会有偏差，所以原话也许有偏差。</p>
+<p>事实上，在点击率预估这项工程的开展初期，这句话非常正确，因为有对它的坚定信念，帮助我们fix了类似于线上线下环境不一致等无数工程bug。因此，看到这篇文章的同学们，如果你发现auc上升，点击率却不上升，请优先排查bug。在确定没有bug的情况下，再看下文吧。</p>
+<p>在bug逐渐收敛之后，这段时间是令人欣慰的，无数次的找新的特征，加入模型，auc上升，线上ctr提升。可是逐渐的，我们出现了越来越多的AUC上升，但是CTR并不一定提升，甚至是有下降的情况，总结分析有下面几种情况：</p>
+<ol>
+<li>
+<p>环境特征的引入</p>
+<p>这里的环境特征是指的网民特征，如query，cookie，流量等与广告无关的信息。如果环境特征引入起的作用只是把不会被点击的环境和可能被点击的环境区分开，例如加入了cookie特征，从而把样本拆的更细，而这个特征的加入的表现对评估数据集auc的提升只是表现在命中某些cookie，点击率为0，那么线上多半不会有太显著的变化，因为针对这些cookie，不管出什么广告，点击率都为0，对这部分情况预测的更好并不能对点击产生影响。</p>
+<p>这种原因一般都有几个伴随的现象，相对比较好识别：</p>
+<p>(1) instance变多，被拆的更细</p>
+<p>(2) top auc上升</p>
+<p>(3) ctr的分布左移</p>
+</li>
+<li>
+<p>点击率和relevance的偏差</p>
+<p>在Google的一篇paper：User browsing models: relevance versus examination中有很详尽的分析。</p>
+<p>我们在说点击率的时候，实际上：点击率=true relevance * position_bias，在online应用的时候，我们都是将position设为相同，即通过true relevance对广告做的排序，而我们线下评估auc，都是对点击率做的评估。这里解释一下为什么online不用点击率做排序，理想情况下我们按照点击率最大化，应该是对所有候选的M个广告分别计算在排名为1,2,3，n的时候的点击率，然后用greedy的算法去计算怎样从中间选择n个广告使得总的点击率（第一名广告点击率+第二名广告点击率+。。）最高，但是这个计算量太大了，承受不起，所以干脆直接用排除掉位置影响的true relevance去排序。这样做并不会有太大问题，因为直观上，position_bias应该只与位置相关，而与广告相关。</p>
+<p>好的，解释完了，回过来说我们线上用true relevance排序，但是线下评测用的点击率，这意味着算法A比算法B的排序性能好，只是说明true_relevance * position_bias比算法B好，不能说明A的true_relevance的排序性能比B好，除了上线检验，没有别的方法去验证。</p>
+<p>在Google的这篇paper里面还提到position_bias越简单，可能越贴近真实情况（即前面说的position_bias只与位置相关，与环境，历史点击行为，广告本身都没有关系）是最好的。因此，如果我们对position_bias过度建模，比如LR模型里面加入了更多的位置相关的组合特征，会出现auc上升的情况，但是线上ctr反而会下降。事实上，我们曾经尝试去除了与位置相关的组合特征，线下auc有下降，但是线上ctr有了比较大的improve。</p>
+</li>
+<li>
+<p>评估集合和线上集合的数据偏差（survival-bias 名词来源于张雷的ppt）</p>
+<p>简言之，就是我们的评估集合是基于线上历史上曾经展现过的样本做的评估，线上未展现过的样本的表现是不清楚的，这其中可能会存在分布的偏差。</p>
+<p>例如A1,A2,A3,B1,B2,B3是六个样本，真实的点击率高低排序应该是A1&gt;A2&gt;A3&gt;B1&gt;B2&gt;B3，历史上只有A1,A2,A3展现过</p>
+<p>算法1的排序：A1&gt;A3&gt;A2&gt;B1&gt;B2&gt;B3</p>
+<p>算法2的排序：B1&gt;B3&gt;B2&gt;A1&gt;A2&gt;A3</p>
+<p>如果基于历史上展现过的样本做评估，算法2(A1&gt;A2&gt;A3)优于算法1(A1&gt;A3&gt;A2)，但是如果线上有较多的B1，B2，B3展现，那么算法2很可能表现还不如算法1</p>
+<p>理论很简单，但是实践中，这个原因很难有指标去验证，除非原来的算法和现在的算法有非常大的差异，比如LR换成GBBT，一般历史样本和线上样本的分布本不会有太大的差异，这样你也就很难用线上新展现样本的比例或者A/B test在这部分新展现样本上去做什么比较。这是我最不喜欢的一个因素，因为所有最后查不出原因的auc上升，ctr没变化的case都很无奈的归咎于这个因素。</p>
+</li>
+</ol>
   </article>
 <!-- 多说评论框 start -->
-      <div class="ds-thread" data-thread-key="dataframechang-jian-cao-zuo.html" data-title="dataframe常见操作" data-url="jhuangpku.github.io/dataframechang-jian-cao-zuo.html"></div> 
+      <div class="ds-thread" data-thread-key="aucshang-sheng-ctryi-ding-shang-sheng-yao.html" data-title="AUC上升CTR一定上升么" data-url="jhuangpku.github.io/aucshang-sheng-ctryi-ding-shang-sheng-yao.html"></div> 
       <!-- 多说评论框 end -->
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/dataframechang-jian-cao-zuo.html&title=dataframe常见操作&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/aucshang-sheng-ctryi-ding-shang-sheng-yao.html&title=AUC上升CTR一定上升么&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->

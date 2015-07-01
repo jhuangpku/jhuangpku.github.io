@@ -111,11 +111,11 @@
         <div id="blog_main_area" class="left col-md-9" count=16>
   <!-- article title -->
   <header>
-      <h1>dataframe常见操作</h1>
+      <h1>Transfer learning在广告点击率预估中的应用</h1>
     <small class="fsize13">
-            <a href="/category/r.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="1 article in this category"><i class="fa fa-dot-circle-o"></i> R</a>
+            <a href="/category/shu-ju-wa-jue.html" rel="tag tooltip" class="label label-default light" data-placement="right" data-original-title="5 articles in this category"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a>
       <!--
-      <a href="/dataframechang-jian-cao-zuo.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="dataframechang-jian-cao-zuo.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
+      <a href="/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html#disqus_thread" class="scrollTo label label-default light" data-disqus-identifier="transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html"><i class="fa fa-comment-o"></i> ?? Comments</a>
       -->
          </small>
   
@@ -135,24 +135,37 @@
 </header>
 
   <article class='content'>
-    <p>在使用R做数据挖掘时，最常用的数据结构莫过于dataframe了，下面列出几种常见的dataframe的操作方法。
-1.查看数据</p>
-<p>head(dataframe) # 查看数据前10行
-tail(dataframe) # 查看数据后10行</p>
+    <p>知心商业广告也是按照点击收费的广告，为了收益最大化，点击率预估准确与否就很重要了，大家应该都知道商业广告点击率预估有一套很有效的机器学习的方法。但是，与传统的凤巢/网盟广告不大一样，知心广告存在多种展现形式，并且不断有新的展现形式加入，这就会频繁的出现“冷”启动，数据少的问题，但是这个冷启动并不是完全的冷启动，因为虽然有多种展现形式，我们的广告库是同一套。我们希望充分利用这个特性，把别的场景上的模型的知识迁移到数据量较少的场景上。</p>
+<p>我们先简单回顾下一个典型的广告点击率模型的几个要素：
+首先是样本：一个广告的一次展现构成一个样本
+然后是特征：这里一般包括ID类的非泛化特征+泛化特征
+最后是模型：凤巢是经历了LR到GBDT再到DNN的过程，本文主要建立在LR的基础上做的实验</p>
+<p>好的，回到我们的问题，我们的问题是有好多个点击率预估模型（一个场景对应一个模型），我们怎么利用广告库是同一套的特性，用样本充分的场景的数据/参数解决样本不充分的场景的点击率预估问题，这就是学术界研究的transfer learning。</p>
+<p>首先学术界的问题定义：有两个数据集，一个是大一些的数据集，我们管他叫source，还有一个是小一些的数据集，我们管他叫target，我们的目的是希望通过某种相似性，把source上的知识迁移到target上，能让target数据集上的模型更好。什么叫知识迁移呢，有两种基本思路，一个是借数据，借数据的思想是说source上有一些数据可以适当转换一下拿过来和target上的数据一起训练；一个是借参数，借参数的思想是说source上训练出来的模型的参数可以改改给target用。其中instance-base和feature-base都是借数据的思想，而parameter-base是借参数的思想。</p>
+<p>第一个是借数据的思路，借数据要解决的一个根本问题是怎么把source上的P_s(x, y)转换成target上的P_t(x, y)，我们是主要采用Alex Smola的blog上提到的一个方法，对source和target做一个二分类模型，从而估算P_t(x, y)/P_s(x, y)，然后这个方法想象起来很美好，现实却很骨感，我们发现这个方法非常不稳定，不管用什么相似度去衡量，总是不可避免的会引入误差，而误差起的负作用往往会比新样本带来的新feature的效应更大，导致效果不好。所以总结一句就是借数据很难，难在怎么引入合理的相似性假设。</p>
+<p>第二个是借参数的思路，什么叫借参数呢，直白的讲就是认为S上参数和T上的参数存在某种相似性，什么叫相似呢，就是他们在某些特征的weight上是一样的（近似的），我们叫做common-part，然后再某些特征的weight是不一样的，分别是source和target独有权重。那具体是怎么做的呢，学术上是怎么做的：让thetas和thetat分别代表s和t上的权重，他们又可以进一步拆分为common-part和individual part，我们的优化目标是s和t上的loss的和最小，而这种拆分一般是通过约束加进去的，就是是一种multi-task的思想。在实际操作的过程中，我们借用了百度已有的一套增量学习框架，直观解释就是首先在source上训练出参数，由于source的数据多，所以这个参数variance会比较小，但是如果作为target上的参数，会带来一些bias，因此我们在该参数的基础上，对target的数据在做一次训练，目标函数有两部分，第一部分的业务含义为新参数在source上的拟合，第二部分的业务含义为新参数在target上的loss及其约束，这个式子还有一个理解，就是如果以bayes的观点来看前面两项就表示w的先验分布，即target的参数的先验分布是一个均值为w*的高斯分布。我们比较下这个公式和学术上公式的区别，就是会发现common-part和individualpart似乎没有体现出来啊？而从业务的角度来讲，这个是个比较合理的解释，怎么合理呢？我举个例子，比如不同的搜索query在不同的场景，他们对ctr的影响应该是一致的，平均意义来讲，不管在哪个场景，“性病怎么治疗”的平均ctr和“感冒怎么治疗”的平均ctr的比值应该是相似的，落到模型上来说，他们对应的weight应该是相似的，也就是我们说的common-part，那我们怎么做呢？
+我们实现的方法是在source训练的时候，只训练“可迁移”的特征，也就是common-part的部分，在target上把所有特征带进去训练，这样就能近似保证common-part一样，individual-part有一定的差异。</p>
+<p>最后小结下自己理解的借数据和借参数的理论分析：</p>
+<p>Instance Base和Feature Base的本质都是Target样本不够，需要借数据，适用场景为Model初始阶段，只有Target自身样本的增加能显著带来auc提升，instance base/feature base才有可能有效
+果
+原因是借来的样本本身会带来一定的噪音，没有很完美的方案解决，因此学术界用instance/feature base解决的都是target上没有label的case，如果target上本身的数据的增加对auc都无帮助，那么带有噪音的数据就更不会有好的收益。</p>
+<p>Parameter Base的本质是Source和Target在参数上有一定的相似性，因此即使样本足够，parameter base也可能会带来增益，原因是如果真的具有相似性，数据充分的source训练的参数更稳定，在此基础上针对target的数据做微调有助于提升target参数的稳定性。</p>
+<p>R语言大会的ppt参见附件，Again，需要翻墙：</p>
+<iframe src="https://www.slideshare.net/slideshow/embed_code/key/mOG0CAeVctprZP" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
   </article>
 <!-- 多说评论框 start -->
-      <div class="ds-thread" data-thread-key="dataframechang-jian-cao-zuo.html" data-title="dataframe常见操作" data-url="jhuangpku.github.io/dataframechang-jian-cao-zuo.html"></div> 
+      <div class="ds-thread" data-thread-key="transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" data-title="Transfer learning在广告点击率预估中的应用" data-url="jhuangpku.github.io/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html"></div> 
       <!-- 多说评论框 end -->
 
   <div class="divider"><!-- lines divider --></div>
 
   <!-- SOCIAL -->
 <p class="socials">
-    <a href="http://www.facebook.com/sharer/sharer.php?u=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
-    <a href="http://twitter.com/home?status=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
-    <a href="https://plus.google.com/share?url=/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
-    <a href="http://pinterest.com/pin/create/link/?url==/dataframechang-jian-cao-zuo.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
-    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/dataframechang-jian-cao-zuo.html&title=dataframe常见操作&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
+    <a href="http://www.facebook.com/sharer/sharer.php?u=/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" class="rounded-icon social fa fa-facebook" target="_blank" title="Share on Facebook"><!-- facebook --></a>
+    <a href="http://twitter.com/home?status=/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" class="rounded-icon social fa fa-twitter" target="_blank" title="Share on Twitter"><!-- twitter --></a>
+    <a href="https://plus.google.com/share?url=/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" class="rounded-icon social fa fa-google-plus" target="_blank" title="Share on Google+"><!-- google plus --></a>
+    <a href="http://pinterest.com/pin/create/link/?url==/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html" class="rounded-icon social fa fa-pinterest"  target="_blank" title="Share on Pinterest"><!-- pinterest --></a>
+    <a href="http://www.linkedin.com/shareArticle?mini=true&url=/transfer-learningzai-yan-gao-dian-ji-lu-yu-gu-zhong-de-ying-yong.html&title=Transfer learning在广告点击率预估中的应用&summary=&source=" class="rounded-icon social fa fa-linkedin" target="_blank" title="Share on Linkedin"><!-- linkedin --></a>
 </p>  
 
   <!-- TAGS -->
