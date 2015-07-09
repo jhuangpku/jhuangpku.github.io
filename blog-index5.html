@@ -1,32 +1,24 @@
   <div class="item">
         <div class="item-title">
-            <h2><a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html">特征分析在广告点击率预估上为什么没那么重要</a></h2>
+            <h2><a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html">AUC上升CTR一定上升么</a></h2>
           <a href="category/shu-ju-wa-jue.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 数据挖掘</a> 
-          <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">一 13 四月 2015</span>
+          <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">五 27 二月 2015</span>
         </div>
         <!-- image -->
 
         <!-- blog short preview -->
         <p>
-            <p>首先需要澄清一点，这里的特征分析主要是指的传统上数据挖掘里面讲的一些特征关系研究比如共线性问题。
-另外，这里的经验特指用LR来做点击率预估。大家学完数据挖掘/机器学习的课程的时候，一定会有个体会，
-特征不可以乱加，乱加特征很可能会导致更坏的效果。所以，在没有任何人的指导下，仅仅是凭借着前人的一些资料，
-我根据之前看的书本，习惯性的陷入了特征选择这个坑中，我会想效果不好的原因会不会是因为加入了特征，有共线性导致的？
-为此，我还专门分析了下LR回归出来的系数的结果，发现有些系数的大小关系确实是不那么与业务直观相符合。
-于是我还尝试减去了这个特征，或者对这个特征做了特殊处理，结果自然是auc下降。在之后的过程中，
-咨询了一些前人，才知道自己的方向走偏，事实上，无数人的经验表明在广告点击率预估这个问题上，
-如果不是性能问题，从来不需要减特征，加入新的特征最多出现auc保持不变，基本不会出现auc下降的情况。
-这直接导致在做广告点击率预估的组里，特征挖掘从来都是没有技术含量的苦力活。
-之后，也没太思考为什么，或者我当时认为大数据下的数据挖掘也许就是这么做的，直到最近做了一个query纠错的问题。</p>
-<p>先描述下query纠错的背景：大致就是网民在用语音搜索的时候，语音组返回10条可能的query，
-我们需要根据这10个query的特征，选择出一个最好的query返回。
-刚开始接手的时候，我尝试了几个特征，发现加某些特征竟然会带来效果的严重下降！！！原来特征选择还是重要的。</p>
-<p>那么回到最初的问题，为什么在广告点击率这个问题上，没有这种问题呢？</p>
-<p>我觉得核心区别在于LR的广告点击率预估实际上是个不那么怕过拟合的机器学习系统 ...</p>
+            <p>记得几年前，百度从谷歌挖来了一个非常牛逼的工程师，这位工程师带来了很多机器学习的概念，实在是让自己这种土包子开了眼界，在一次会议上，这位工程师在解释auc和线上ctr的关系时，说 ”我做了这么多年机器学习，还从来没见过算法A在auc上胜过算法B，但是线上表现A比B差。” 必须备注一点，自己当时连auc都没搞清楚的小喽啰，也许记忆会有偏差，所以原话也许有偏差。</p>
+<p>事实上，在点击率预估这项工程的开展初期，这句话非常正确，因为有对它的坚定信念，帮助我们fix了类似于线上线下环境不一致等无数工程bug。因此，看到这篇文章的同学们，如果你发现auc上升，点击率却不上升，请优先排查bug。在确定没有bug的情况下，再看下文吧。</p>
+<p>在bug逐渐收敛之后，这段时间是令人欣慰的，无数次的找新的特征，加入模型，auc上升，线上ctr提升。可是逐渐的，我们出现了越来越多的AUC上升，但是CTR并不一定提升，甚至是有下降的情况，总结分析有下面几种情况：</p>
+<ol>
+<li>
+<p>环境特征的引入</p>
+<p>这里的环境特征是指的网民特征，如query，cookie，流量等与广告无关的信息。如果环境特征引入起的作用只是把不会被点击的环境和可能被点击的环境区分开，例如加入了cookie特征，从而把样本拆的更细，而这个特征的加入的表现对评估数据集auc的提升只是表现在命中某些cookie，点击率为0，那么线上多半不会有太显著的变化，因为针对这些cookie，不管出什么广告 ...</p></li></ol>
         </p>
 
         <!-- read more button -->
-        <a href="/te-zheng-fen-xi-zai-yan-gao-dian-ji-lu-yu-gu-shang-wei-shi-yao-mei-na-yao-zhong-yao.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+        <a href="/aucshang-sheng-ctryi-ding-shang-sheng-yao.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
       </div>
  
