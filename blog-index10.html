@@ -1,18 +1,41 @@
   <div class="item">
         <div class="item-title">
-            <h2><a href="/hao-mei-yi-si.html">好没意思</a></h2>
-          <a href="category/za-tan.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> 杂谈</a> 
-          <a href="/hao-mei-yi-si.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
-          <span class="label label-default light">五 30 一月 2015</span>
+            <h2><a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html">Python中根据字符串初始化类</a></h2>
+          <a href="category/python.html" class="label label-default light"><i class="fa fa-dot-circle-o"></i> Python</a> 
+          <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html#disqus_thread" class="label label-default light"><i class="fa fa-comment-o"></i> ?? Comments</a>
+          <span class="label label-default light">五 27 二月 2015</span>
         </div>
         <!-- image -->
 
         <!-- blog short preview -->
         <p>
-            <p>情怀和节操碎了一地。</p>
+            <p>在算法类code中，一个非常常见的模式是读取配置，根据配置的字符串决定应该使用哪个类，即需要解决根据类名生成实例。在这个过程中，希望能够支持使用者添加自己的类，而不需要动框架代码，典型的工厂模式。</p>
+<p>在具体到python的实现时，需要能够根据string来决定生成哪个实例，查了几种方法：</p>
+<p>方法一：通过getattr(module_name, class_name)来生成实例，</p>
+<p>方法二：通过eval(class_name)来生成实例，问题主要在于eval不安全</p>
+<p>最后采用了方法一，代码如下：</p>
+<p>factory.py</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">pizza</span>
+
+<span class="k">class</span> <span class="nc">PizzaFactory</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pizza factory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">create_pizza</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_name</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        根据name，生成对应的pizza</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+        <span class="n">pizza_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name ...</span></pre></div>
         </p>
 
         <!-- read more button -->
-        <a href="/hao-mei-yi-si.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
+        <a href="/pythonzhong-gen-ju-zi-fu-chuan-chu-shi-hua-lei.html" class="btn btn-xs"><i class="fa fa-sign-out"></i> READ MORE</a>
       </div>
  
